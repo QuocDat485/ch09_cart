@@ -25,10 +25,27 @@ public class Cart implements Serializable {
         for (int i = 0; i < items.size(); i++) {
             LineItem lineItem = items.get(i);
             if (lineItem.getProduct().getCode().equals(code)) {
+                // Cộng dồn số lượng
+                lineItem.setQuantity(lineItem.getQuantity() + quantity);
+                return;
+            }
+        }
+        // Nếu mặt hàng chưa tồn tại, thêm mới
+        items.add(item);
+    }
+
+    public void updateItemQuantity(LineItem item, int quantity) {
+        String code = item.getProduct().getCode();
+        for (int i = 0; i < items.size(); i++) {
+            LineItem lineItem = items.get(i);
+            if (lineItem.getProduct().getCode().equals(code)) {
+                // Đặt số lượng cụ thể
                 lineItem.setQuantity(quantity);
                 return;
             }
         }
+        // Nếu mặt hàng chưa tồn tại, thêm mới với số lượng được chỉ định
+        item.setQuantity(quantity);
         items.add(item);
     }
 
